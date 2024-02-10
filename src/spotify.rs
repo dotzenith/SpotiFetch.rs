@@ -10,6 +10,11 @@ pub struct Spotify {
     client: AuthCodeSpotify,
 }
 
+pub struct FetchResult<T> {
+    pub data: T,
+    pub link: String,
+}
+
 impl Spotify {
     pub fn new(scopes: &str) -> Result<Self> {
         let creds = Credentials::from_env().context("Could not find Client ID and Client Secret")?;
@@ -31,13 +36,7 @@ impl Spotify {
         Ok(Spotify { client: spotify })
     }
 
-    pub fn profile(&self) -> Result<HashMap<&str, String>> {
-        // Username
-        // Now playing
-        // Recent
-        // Top Track
-        // Top Artist
-
+    pub fn profile(&self) -> Result<FetchResult<HashMap<&str, String>>> {
         let mut results: HashMap<&str, String> = std::collections::HashMap::new();
 
         let username = self
@@ -73,27 +72,40 @@ impl Spotify {
             ),
         );
 
-        Ok(results)
+        Ok(FetchResult {
+            data: results,
+            link: recent_track.album.images[1].url.clone(),
+        })
     }
 
-    pub fn top_artists(&self, term: TimeRange) -> Result<Vec<String>> {
-        Ok(self
+    pub fn top_artists(&self, term: TimeRange) -> Result<FetchResult<Vec<String>>> {
+        let items: Vec<_> = self
             .client
             .current_user_top_artists_manual(Some(term), Some(5), None)?
-            .items
-            .into_iter()
-            .map(|artist| artist.name)
-            .collect())
+            .items;
+        
+        let link = items[0].images[1].url.clone();
+        let artists: Vec<String> = items.into_iter().map(|artist| artist.name).collect();
+
+        Ok(FetchResult {
+            data: artists,
+            link,
+        })
     }
 
-    pub fn top_tracks(&self, term: TimeRange) -> Result<Vec<String>> {
-        Ok(self
+    pub fn top_tracks(&self, term: TimeRange) -> Result<FetchResult<Vec<String>>> {
+        let items: Vec<_> = self
             .client
             .current_user_top_tracks_manual(Some(term), Some(5), None)?
-            .items
+            .items;
+        
+        let link = items[0].album.images[1].url.clone();
+        let tracks: Vec<String> = items
             .into_iter()
             .map(|track| format!("{} - {}", track.name, track.artists.first().unwrap().name))
-            .collect())
+            .collect();
+
+        Ok(FetchResult {data: tracks, link})
     }
 
     fn now_playing(&self) -> Result<String> {

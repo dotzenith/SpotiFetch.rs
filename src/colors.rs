@@ -1,10 +1,11 @@
+use anyhow::Result;
 use image::GenericImageView;
 use pigmnts::{
     color::{LAB, RGB},
     pigments_pixels, weights, Pixels,
 };
 
-pub fn pigmnts(image_path: &str, count: u8) -> Result<Vec<RGB>, Box<dyn std::error::Error>> {
+pub fn pigmnts(image_path: &str, count: u8) -> Result<Vec<RGB>> {
     let mut res = reqwest::blocking::get(image_path)?;
     let mut buf: Vec<u8> = vec![];
     res.copy_to(&mut buf)?;
