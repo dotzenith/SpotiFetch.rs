@@ -1,5 +1,6 @@
 use crate::colors;
 use kolorz::{HexKolorize, Kolor, KoloredText};
+use rand::Rng;
 
 pub struct LogoFields {
     pub border: KoloredText,
@@ -7,17 +8,26 @@ pub struct LogoFields {
     pub middle: (KoloredText, KoloredText, KoloredText),
 }
 
-pub fn kolorz_output(colorscheme: Kolor, lines: Vec<String>, profile: bool) {
+pub fn kolorz_output(colorscheme: Kolor, lines: Vec<String>, profile: bool, random_border: bool) {
     let middle = (
         colorscheme.purple("_..**.._"),
         colorscheme.blue("_..**.._"),
         colorscheme.orange("_..**.._"),
     );
-    let logo_fields = LogoFields {
+    
+    let mut logo_fields = LogoFields {
         border: colorscheme.green(";;"),
         bar: colorscheme.green("______"),
         middle,
     };
+
+    if random_border {
+        let mut rng = rand::thread_rng();
+        let color_num = rng.gen_range(0..=6) as usize;
+
+        logo_fields.border = colorscheme.numbered(";;", color_num);
+        logo_fields.bar = colorscheme.numbered("______", color_num);
+    }
 
     if profile {
         let output_lines: [String; 5] = [

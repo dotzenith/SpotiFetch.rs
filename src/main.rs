@@ -44,6 +44,12 @@ fn main() {
                 .global(true)
                 .help("Use cover art for album or artist to generate a colorscheme"),
         )
+        .arg(
+            arg!(--random)
+                .action(clap::ArgAction::SetTrue)
+                .global(true)
+                .help("Use a random color as the outline"),
+        )
         .subcommand(Command::new("profile").about("Fetch general information about user profile"))
         .subcommand(Command::new("top-tracks").about("Fetch the top tracks for a given term"))
         .subcommand(Command::new("top-artists").about("Fetch the top artists for a given term"))
@@ -73,7 +79,12 @@ fn main() {
             if matches.get_flag("art") {
                 output::custom_output(profile.link, lines, true)
             } else {
-                output::kolorz_output(Kolor::new(colorscheme.as_str()), lines, true)
+                output::kolorz_output(
+                    Kolor::new(colorscheme.as_str()),
+                    lines,
+                    true,
+                    matches.get_flag("random"),
+                )
             }
         }
         Some(("top-tracks", _)) => {
@@ -89,7 +100,12 @@ fn main() {
             if matches.get_flag("art") {
                 output::custom_output(top_tracks.link, top_tracks.data, true)
             } else {
-                output::kolorz_output(Kolor::new(colorscheme.as_str()), top_tracks.data, true)
+                output::kolorz_output(
+                    Kolor::new(colorscheme.as_str()),
+                    top_tracks.data,
+                    true,
+                    matches.get_flag("random"),
+                )
             }
         }
         Some(("top-artists", _)) => {
@@ -105,7 +121,12 @@ fn main() {
             if matches.get_flag("art") {
                 output::custom_output(top_artists.link, top_artists.data, true)
             } else {
-                output::kolorz_output(Kolor::new(colorscheme.as_str()), top_artists.data, true)
+                output::kolorz_output(
+                    Kolor::new(colorscheme.as_str()),
+                    top_artists.data,
+                    true,
+                    matches.get_flag("random"),
+                )
             }
         }
         _ => unreachable!(),
