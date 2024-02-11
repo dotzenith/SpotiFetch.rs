@@ -1,0 +1,93 @@
+use crate::colors;
+use kolorz::{HexKolorize, Kolor, KoloredText};
+
+pub struct LogoFields {
+    pub border: KoloredText,
+    pub bar: KoloredText,
+    pub middle: (KoloredText, KoloredText, KoloredText),
+}
+
+pub fn kolorz_output(colorscheme: Kolor, lines: Vec<String>, profile: bool) {
+    let middle = (
+        colorscheme.purple("_..**.._"),
+        colorscheme.blue("_..**.._"),
+        colorscheme.orange("_..**.._"),
+    );
+    let logo_fields = LogoFields {
+        border: colorscheme.green(";;"),
+        bar: colorscheme.green("______"),
+        middle,
+    };
+
+    if profile {
+        let output_lines: [String; 5] = [
+            format!("{}            {}", colorscheme.purple("USER"), lines[0]),
+            format!("{}     {}", colorscheme.blue("NOW PLAYING"), lines[1]),
+            format!("{}    {}", colorscheme.green("RECENT TRACK"), lines[2]),
+            format!("{}       {}", colorscheme.orange("TOP TRACK"), lines[3]),
+            format!("{}      {}", colorscheme.yellow("TOP ARTIST"), lines[4]),
+        ];
+        print_art(logo_fields, output_lines);
+    } else {
+        let output_lines: [String; 5] = [
+            format!("{}", colorscheme.purple(&lines[0])),
+            format!("{}", colorscheme.blue(&lines[1])),
+            format!("{}", colorscheme.green(&lines[2])),
+            format!("{}", colorscheme.orange(&lines[3])),
+            format!("{}", colorscheme.yellow(&lines[4])),
+        ];
+        print_art(logo_fields, output_lines);
+    }
+}
+
+pub fn custom_output(img_url: String, lines: Vec<String>, profile: bool) {
+    let image_colors: Vec<String> = colors::pigmnts(&img_url, 6)
+        .unwrap()
+        .into_iter()
+        .map(|color| color.hex())
+        .collect();
+
+    let middle = (
+        "_..**.._".kolorize(&image_colors[1]),
+        "_..**.._".kolorize(&image_colors[2]),
+        "_..**.._".kolorize(&image_colors[3]),
+    );
+    let logo_fields = LogoFields {
+        border: ";;".kolorize(&image_colors[0]),
+        bar: "______".kolorize(&image_colors[0]),
+        middle,
+    };
+
+    if profile {
+        let output_lines: [String; 5] = [
+            format!("{}            {}", "USER".kolorize(&image_colors[1]), lines[0]),
+            format!("{}     {}", "NOW PLAYING".kolorize(&image_colors[2]), lines[1]),
+            format!("{}    {}", "RECENT TRACK".kolorize(&image_colors[3]), lines[2]),
+            format!("{}       {}", "TOP TRACK".kolorize(&image_colors[4]), lines[3]),
+            format!("{}      {}", "TOP ARTIST".kolorize(&image_colors[5]), lines[4]),
+        ];
+        print_art(logo_fields, output_lines);
+    } else {
+        let output_lines: [String; 5] = [
+            format!("{}", &lines[0].kolorize(&image_colors[1])),
+            format!("{}", &lines[1].kolorize(&image_colors[2])),
+            format!("{}", &lines[2].kolorize(&image_colors[3])),
+            format!("{}", &lines[3].kolorize(&image_colors[4])),
+            format!("{}", &lines[4].kolorize(&image_colors[5])),
+        ];
+        print_art(logo_fields, output_lines);
+    }
+}
+
+#[rustfmt::skip]
+pub fn print_art(logo_fields: LogoFields, lines: [String; 5]) {
+    println!("      {}", logo_fields.bar);
+    println!("   {}        {}", logo_fields.border, logo_fields.border);
+    println!(" {}            {}      {}", logo_fields.border, logo_fields.border, lines[0]);
+    println!("{}   {}   {}     {}", logo_fields.border, logo_fields.middle.0, logo_fields.border, lines[1]);
+    println!("{}   {}   {}     {}", logo_fields.border, logo_fields.middle.1, logo_fields.border, lines[2]);
+    println!("{}   {}   {}     {}", logo_fields.border, logo_fields.middle.2, logo_fields.border, lines[3]);
+    println!(" {}            {}      {}", logo_fields.border, logo_fields.border, lines[4]);
+    println!("   {}        {}", logo_fields.border, logo_fields.border);
+    println!("      {}", logo_fields.bar);
+}

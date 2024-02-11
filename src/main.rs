@@ -1,41 +1,113 @@
 mod colors;
-mod print;
+mod output;
 mod spotify;
-use kolorz::{HexKolorize, Kolor};
+use clap::{arg, command, Command};
+use std::process::exit;
+
+use kolorz::Kolor;
 use rspotify::model::TimeRange;
 
-pub enum ArtType {
-    ColorScheme(Kolor),
-    Artwork(Vec<String>),
-}
-
 fn main() {
-    let client =
-        spotify::Spotify::new("user-read-currently-playing user-top-read user-read-recently-played user-read-private")
-            .unwrap();
+    let spotify_client = match spotify::Spotify::new(
+        "user-read-currently-playing user-top-read user-read-recently-played user-read-private",
+    ) {
+        Ok(client) => client,
+        Err(_) => {
+            eprintln!("Unable to establish connection to the Spotify API");
+            exit(1)
+        }
+    };
 
+    let matches = command!()
+        .subcommand_required(true)
+        .arg(
+            arg!(--colorscheme <STR>)
+                .value_parser(clap::value_parser!(String))
+                .default_value("catppuccin mocha")
+                .default_missing_value("catppuccin mocha")
+                .require_equals(false)
+                .global(true)
+                .help("See the readme for available colorschemes"),
+        )
+        .arg(
+            arg!(--term <STR>)
+                .value_parser(clap::value_parser!(String))
+                .default_value("mid")
+                .default_missing_value("mid")
+                .require_equals(false)
+                .global(true)
+                .help("The timeline for the top tracks/artists; short, mid, long"),
+        )
+        .arg(
+            arg!(--art)
+                .action(clap::ArgAction::SetTrue)
+                .global(true)
+                .help("Use cover art for album or artist to generate a colorscheme"),
+        )
+        .subcommand(Command::new("profile").about("Fetch general information about user profile"))
+        .subcommand(Command::new("top-tracks").about("Fetch the top tracks for a given term"))
+        .subcommand(Command::new("top-artists").about("Fetch the top artists for a given term"))
+        .get_matches();
 
-    let profile = client.profile().unwrap();
-    let top_tracks = client.top_tracks(TimeRange::MediumTerm).unwrap();
-    let top_artists = client.top_artists(TimeRange::ShortTerm).unwrap();
+    match matches.subcommand() {
+        Some(("profile", _)) => {
+            let term = match matches.get_one::<String>("term").unwrap().as_str() {
+                "short" => TimeRange::ShortTerm,
+                "mid" => TimeRange::MediumTerm,
+                "long" => TimeRange::LongTerm,
+                _ => TimeRange::MediumTerm,
+            };
+            let colorscheme = matches.get_one::<String>("colorscheme").unwrap();
 
-    let kolorscheme = Kolor::new("catppuccin mocha");
-    let one = format!("{}            {}", kolorscheme.purple("USER"), profile.data["Username"]);
-    let two = format!("{}     {}", kolorscheme.blue("NOW PLAYING"), profile.data["Now Playing"]);
-    let three = format!("{}    {}", kolorscheme.green("RECENT TRACK"), profile.data["Recent"]);
-    let four = format!("{}       {}", kolorscheme.orange("TOP TRACK"), top_tracks.data[0]);
-    let five = format!("{}      {}", kolorscheme.yellow("TOP ARTIST"), top_artists.data[0]);
-    print::print_art(ArtType::ColorScheme(kolorscheme), &one, &two, &three, &four, &five);
+            let profile = spotify_client.profile().unwrap();
+            let top_tracks = spotify_client.top_tracks(term).unwrap();
+            let top_artists = spotify_client.top_artists(term).unwrap();
 
-    let image_colors: Vec<String> = colors::pigmnts(&profile.link, 6)
-        .unwrap()
-        .into_iter()
-        .map(|color| color.hex())
-        .collect();
-    let one = format!("{}            {}", "USER".kolorize(&image_colors[1]), profile.data["Username"]);
-    let two = format!("{}     {}", "NOW PLAYING".kolorize(&image_colors[2]), profile.data["Now Playing"]);
-    let three = format!("{}    {}", "RECENT TRACK".kolorize(&image_colors[3]), profile.data["Recent"]);
-    let four = format!("{}       {}", "TOP TRACK".kolorize(&image_colors[4]), top_tracks.data[0]);
-    let five = format!("{}      {}", "TOP ARTIST".kolorize(&image_colors[5]), top_artists.data[0]);
-    print::print_art(ArtType::Artwork(image_colors), &one, &two, &three, &four, &five);
+            let mut lines: Vec<String> = vec![];
+            lines.push(profile.data["Username"].clone());
+            lines.push(profile.data["Now Playing"].clone());
+            lines.push(profile.data["Recent"].clone());
+            lines.push(top_tracks.data[0].clone());
+            lines.push(top_artists.data[0].clone());
+
+            if matches.get_flag("art") {
+                output::custom_output(profile.link, lines, true)
+            } else {
+                output::kolorz_output(Kolor::new(colorscheme.as_str()), lines, true)
+            }
+        }
+        Some(("top-tracks", _)) => {
+            let term = match matches.get_one::<String>("term").unwrap().as_str() {
+                "short" => TimeRange::ShortTerm,
+                "mid" => TimeRange::MediumTerm,
+                "long" => TimeRange::LongTerm,
+                _ => TimeRange::MediumTerm,
+            };
+            let colorscheme = matches.get_one::<String>("colorscheme").unwrap();
+            let top_tracks = spotify_client.top_tracks(term).unwrap();
+
+            if matches.get_flag("art") {
+                output::custom_output(top_tracks.link, top_tracks.data, true)
+            } else {
+                output::kolorz_output(Kolor::new(colorscheme.as_str()), top_tracks.data, true)
+            }
+        }
+        Some(("top-artists", _)) => {
+            let term = match matches.get_one::<String>("term").unwrap().as_str() {
+                "short" => TimeRange::ShortTerm,
+                "mid" => TimeRange::MediumTerm,
+                "long" => TimeRange::LongTerm,
+                _ => TimeRange::MediumTerm,
+            };
+            let colorscheme = matches.get_one::<String>("colorscheme").unwrap();
+            let top_artists = spotify_client.top_artists(term).unwrap();
+
+            if matches.get_flag("art") {
+                output::custom_output(top_artists.link, top_artists.data, true)
+            } else {
+                output::kolorz_output(Kolor::new(colorscheme.as_str()), top_artists.data, true)
+            }
+        }
+        _ => unreachable!(),
+    }
 }

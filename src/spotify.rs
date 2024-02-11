@@ -83,14 +83,11 @@ impl Spotify {
             .client
             .current_user_top_artists_manual(Some(term), Some(5), None)?
             .items;
-        
+
         let link = items[0].images[1].url.clone();
         let artists: Vec<String> = items.into_iter().map(|artist| artist.name).collect();
 
-        Ok(FetchResult {
-            data: artists,
-            link,
-        })
+        Ok(FetchResult { data: artists, link })
     }
 
     pub fn top_tracks(&self, term: TimeRange) -> Result<FetchResult<Vec<String>>> {
@@ -98,14 +95,14 @@ impl Spotify {
             .client
             .current_user_top_tracks_manual(Some(term), Some(5), None)?
             .items;
-        
+
         let link = items[0].album.images[1].url.clone();
         let tracks: Vec<String> = items
             .into_iter()
             .map(|track| format!("{} - {}", track.name, track.artists.first().unwrap().name))
             .collect();
 
-        Ok(FetchResult {data: tracks, link})
+        Ok(FetchResult { data: tracks, link })
     }
 
     fn now_playing(&self) -> Result<String> {
