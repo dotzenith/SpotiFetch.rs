@@ -102,12 +102,12 @@ fn main() {
             let top_tracks = spotify_client.top_tracks(term).unwrap();
 
             if matches.get_flag("art") {
-                output::custom_output(top_tracks.link, top_tracks.data, true)
+                output::custom_output(top_tracks.link, top_tracks.data, false)
             } else {
                 output::kolorz_output(
                     Kolor::new(colorscheme.as_str()),
                     top_tracks.data,
-                    true,
+                    false,
                     matches.get_flag("random"),
                 )
             }
@@ -123,12 +123,12 @@ fn main() {
             let top_artists = spotify_client.top_artists(term).unwrap();
 
             if matches.get_flag("art") {
-                output::custom_output(top_artists.link, top_artists.data, true)
+                output::custom_output(top_artists.link, top_artists.data, false)
             } else {
                 output::kolorz_output(
                     Kolor::new(colorscheme.as_str()),
                     top_artists.data,
-                    true,
+                    false,
                     matches.get_flag("random"),
                 )
             }
