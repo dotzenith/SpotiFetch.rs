@@ -130,6 +130,8 @@ $ spotifetch profile                # uses catppuccin mocha
 $ spotifetch profile -c nord        # uses nord
 ```
 
+The list of all available colorschemes can be found [here](https://github.com/dotzenith/kolorz.rs)
+
 #### SpotiFetch also supports dynamically generated colorschemes using the `--art`/`a` option
 
 ```sh
