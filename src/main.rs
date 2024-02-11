@@ -22,6 +22,7 @@ fn main() {
         .subcommand_required(true)
         .arg(
             arg!(--colorscheme <STR>)
+                .short('c')
                 .value_parser(clap::value_parser!(String))
                 .default_value("catppuccin mocha")
                 .default_missing_value("catppuccin mocha")
@@ -31,6 +32,7 @@ fn main() {
         )
         .arg(
             arg!(--term <STR>)
+                .short('t')
                 .value_parser(clap::value_parser!(String))
                 .default_value("mid")
                 .default_missing_value("mid")
@@ -40,12 +42,14 @@ fn main() {
         )
         .arg(
             arg!(--art)
+                .short('a')
                 .action(clap::ArgAction::SetTrue)
                 .global(true)
                 .help("Use cover art for album or artist to generate a colorscheme"),
         )
         .arg(
             arg!(--random)
+                .short('r')
                 .action(clap::ArgAction::SetTrue)
                 .global(true)
                 .help("Use a random color as the outline"),
