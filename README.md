@@ -153,7 +153,7 @@ SpotiFetch.rs is the direct result of browsing too many unix subreddits and gene
 ---
 
 ### ❖ What's New? 
-0.1.1 - Add builds for windows and ARM linux
+0.1.2 - Make the output all uppercase
 
 ---
 

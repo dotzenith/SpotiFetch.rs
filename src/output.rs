@@ -14,7 +14,7 @@ pub fn kolorz_output(colorscheme: Kolor, lines: Vec<String>, profile: bool, rand
         colorscheme.blue("_..**.._"),
         colorscheme.orange("_..**.._"),
     );
-    
+
     let mut logo_fields = LogoFields {
         border: colorscheme.green(";;"),
         bar: colorscheme.green("______"),

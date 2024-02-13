@@ -72,6 +72,10 @@ impl Spotify {
             ),
         );
 
+        for val in results.values_mut() {
+            *val = val.to_uppercase();
+        }
+
         Ok(FetchResult {
             data: results,
             link: recent_track.album.images[1].url.clone(),
@@ -85,7 +89,7 @@ impl Spotify {
             .items;
 
         let link = items[0].images[1].url.clone();
-        let artists: Vec<String> = items.into_iter().map(|artist| artist.name).collect();
+        let artists: Vec<String> = items.into_iter().map(|artist| artist.name.to_uppercase()).collect();
 
         Ok(FetchResult { data: artists, link })
     }
@@ -99,7 +103,13 @@ impl Spotify {
         let link = items[0].album.images[1].url.clone();
         let tracks: Vec<String> = items
             .into_iter()
-            .map(|track| format!("{} - {}", track.name, track.artists.first().unwrap().name))
+            .map(|track| {
+                format!(
+                    "{} - {}",
+                    track.name.to_uppercase(),
+                    track.artists.first().unwrap().name.to_uppercase()
+                )
+            })
             .collect();
 
         Ok(FetchResult { data: tracks, link })
