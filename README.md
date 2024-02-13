@@ -58,7 +58,7 @@ brew install spotifetch
 
 #### Powershell
 ```sh
-irm https://github.com/dotzenith/lovesay.rs/releases/latest/download/spotifetch-installer.ps1 | iex
+irm https://github.com/dotzenith/SpotiFetch.rs/releases/latest/download/spotifetch-installer.ps1 | iex
 ```
 
 #### Cargo
