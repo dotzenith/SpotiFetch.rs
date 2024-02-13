@@ -56,13 +56,18 @@ brew tap dotzenith/tap
 brew install spotifetch
 ```
 
+#### Powershell
+```sh
+irm https://github.com/dotzenith/lovesay.rs/releases/latest/download/spotifetch-installer.ps1 | iex
+```
+
 #### Cargo
 ```sh
 cargo install spotifetch
 ```
 
 #### Binaries
-Pre-Compiled binaries for Linux and MacOS are available in [Releases](https://github.com/dotzenith/SpotiFetch.rs/releases)
+Pre-Compiled binaries for linux, mac, and windows are available in [Releases](https://github.com/dotzenith/SpotiFetch.rs/releases)
 
 #### Source
 - First, install [rust](https://rustup.rs/)
@@ -148,7 +153,7 @@ SpotiFetch.rs is the direct result of browsing too many unix subreddits and gene
 ---
 
 ### ❖ What's New? 
-0.1.0 - Initial Release
+0.1.1 - Add builds for windows and ARM linux
 
 ---
 
