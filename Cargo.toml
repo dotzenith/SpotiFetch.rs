@@ -1,6 +1,6 @@
 [package]
 name = "spotifetch"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 description = "A simple and beautiful fetch tool for spotify, now rusty :) "
 homepage = "https://github.com/dotzenith/SpotiFetch.rs"
