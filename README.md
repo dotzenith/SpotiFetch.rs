@@ -52,13 +52,12 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/dotzenith/SpotiFetch.rs
 
 #### Brew
 ```sh
-brew tap dotzenith/tap
-brew install spotifetch
+brew install dotzenith/tap/spotifetch
 ```
 
 #### Powershell
 ```sh
-irm https://github.com/dotzenith/SpotiFetch.rs/releases/latest/download/spotifetch-installer.ps1 | iex
+powershell -ExecutionPolicy ByPass -c "irm https://github.com/dotzenith/SpotiFetch.rs/releases/latest/download/spotifetch-installer.ps1 | iex"
 ```
 
 #### Cargo
