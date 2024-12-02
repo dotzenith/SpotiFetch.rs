@@ -152,7 +152,8 @@ SpotiFetch.rs is the direct result of browsing too many unix subreddits and gene
 ---
 
 ### ❖ What's New? 
-0.1.4 - Move away from openssl
+
+0.1.5 - Update rust-toolchain
 
 ---
 
