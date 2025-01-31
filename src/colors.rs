@@ -4,11 +4,11 @@ use pigmnts::{
     color::{LAB, RGB},
     pigments_pixels, weights, Pixels,
 };
+use url::Url;
 
 pub fn pigmnts(image_path: &str, count: u8) -> Result<Vec<RGB>> {
-    let mut res = reqwest::blocking::get(image_path)?;
-    let mut buf: Vec<u8> = vec![];
-    res.copy_to(&mut buf)?;
+    let mut res = ureq::get(Url::parse(image_path)?.as_ref()).call()?;
+    let buf: Vec<u8> = res.body_mut().read_to_vec()?;
     let mut img = image::load_from_memory(buf.as_slice())?;
 
     img = img.resize(512, 512, image::imageops::FilterType::CatmullRom);

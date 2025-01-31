@@ -153,7 +153,7 @@ SpotiFetch.rs is the direct result of browsing too many unix subreddits and gene
 
 ### ❖ What's New? 
 
-0.1.5 - Update rust-toolchain
+0.1.6 - Use `ureq` instead of `reqwest::blocking`
 
 ---
 

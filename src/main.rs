@@ -12,8 +12,8 @@ fn main() {
         "user-read-currently-playing user-top-read user-read-recently-played user-read-private",
     ) {
         Ok(client) => client,
-        Err(_) => {
-            eprintln!("Unable to establish connection to the Spotify API");
+        Err(e) => {
+            eprintln!("Unable to establish connection to the Spotify API: {e}");
             exit(1)
         }
     };
