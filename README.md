@@ -22,7 +22,7 @@
 
   SpotiFetch.rs is a simple fetch tool to display info about your Spotify profile using the spotify API. It's a rewrite of the original [spotifetch](https://github.com/dotzenith/SpotiFetch)
 
-  <img src="https://github.com/dotzenith/dotzenith/blob/main/assets/SpotiFetch/spotifetch.gif" alt="spotifetch gif">
+  <img src="https://assets.danshu.co/SpotiFetch/spotifetch.gif" alt="spotifetch gif">
 
 ---
 
