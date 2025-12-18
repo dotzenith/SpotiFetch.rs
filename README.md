@@ -153,7 +153,7 @@ SpotiFetch.rs is the direct result of browsing too many unix subreddits and gene
 
 ### ❖ What's New? 
 
-0.1.8 - Update dist and rust version
+0.1.9 - Update dist
 
 ---
 
