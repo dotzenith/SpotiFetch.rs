@@ -2,7 +2,7 @@ use anyhow::{Context, Result};
 use platform_dirs::AppDirs;
 use rspotify::model::{PlayableItem, TimeRange};
 use rspotify::prelude::OAuthClient;
-use rspotify::{scopes, AuthCodeSpotify, Config, Credentials, OAuth};
+use rspotify::{AuthCodeSpotify, Config, Credentials, OAuth, scopes};
 use std::collections::HashMap;
 use std::fs::create_dir;
 

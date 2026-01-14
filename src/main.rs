@@ -1,7 +1,7 @@
 mod colors;
 mod output;
 mod spotify;
-use clap::{arg, command, Command};
+use clap::{Command, arg, command};
 use std::process::exit;
 
 use kolorz::Kolor;
@@ -84,7 +84,7 @@ fn main() {
                 output::custom_output(profile.link, lines, true)
             } else {
                 output::kolorz_output(
-                    Kolor::new(colorscheme.as_str()),
+                    Kolor::new(colorscheme.as_str()).expect("unknown colorscheme"),
                     lines,
                     true,
                     matches.get_flag("random"),
@@ -105,7 +105,7 @@ fn main() {
                 output::custom_output(top_tracks.link, top_tracks.data, false)
             } else {
                 output::kolorz_output(
-                    Kolor::new(colorscheme.as_str()),
+                    Kolor::new(colorscheme.as_str()).expect("unknown colorscheme"),
                     top_tracks.data,
                     false,
                     matches.get_flag("random"),
@@ -126,7 +126,7 @@ fn main() {
                 output::custom_output(top_artists.link, top_artists.data, false)
             } else {
                 output::kolorz_output(
-                    Kolor::new(colorscheme.as_str()),
+                    Kolor::new(colorscheme.as_str()).expect("unknown colorscheme"),
                     top_artists.data,
                     false,
                     matches.get_flag("random"),

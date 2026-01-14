@@ -1,8 +1,9 @@
 use anyhow::Result;
 use image::GenericImageView;
 use pigmnts::{
+    Pixels,
     color::{LAB, RGB},
-    pigments_pixels, weights, Pixels,
+    pigments_pixels, weights,
 };
 use url::Url;
 

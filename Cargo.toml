@@ -1,6 +1,6 @@
 [package]
 name = "spotifetch"
-version = "0.1.9"
+version = "1.0.0"
 edition = "2024"
 description = "A simple and beautiful fetch tool for spotify, now rusty :) "
 homepage = "https://github.com/dotzenith/SpotiFetch.rs"
@@ -9,7 +9,7 @@ license = "MIT"
 
 [dependencies]
 pigmnts = "0.7.0"
-kolorz = "0.10.0"
+kolorz = "1.0.0"
 ureq = { version = "3.0.1", features = ["json"] }
 url = "2.5.4"
 rspotify = { version = "0.12.0", default-features = false, features = ["cli", "client-ureq", "ureq-rustls-tls"] }
