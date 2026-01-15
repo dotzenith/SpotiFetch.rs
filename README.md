@@ -1,23 +1,5 @@
 <h2 align="center"> ━━━━━━  ❖  ━━━━━━ </h2>
 
-<!-- BADGES -->
-<div align="center">
-   <p></p>
-   
-   <img src="https://img.shields.io/github/stars/dotzenith/SpotiFetch.rs?color=F8BD96&labelColor=302D41&style=for-the-badge">   
-
-   <img src="https://img.shields.io/github/forks/dotzenith/SpotiFetch.rs?color=DDB6F2&labelColor=302D41&style=for-the-badge">   
-
-   <img src="https://img.shields.io/github/repo-size/dotzenith/SpotiFetch.rs?color=ABE9B3&labelColor=302D41&style=for-the-badge">
-   
-   <img src="https://img.shields.io/github/commit-activity/y/dotzenith/SpotiFetch.rs?color=96CDFB&labelColor=302D41&style=for-the-badge&label=COMMITS"/>
-   <br>
-</div>
-
-<p/>
-
----
-
 ### ❖ Information 
 
   SpotiFetch.rs is a simple fetch tool to display info about your Spotify profile using the spotify API. It's a rewrite of the original [spotifetch](https://github.com/dotzenith/SpotiFetch)
