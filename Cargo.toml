@@ -1,6 +1,6 @@
 [package]
 name = "spotifetch"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2024"
 description = "A simple and beautiful fetch tool for spotify, now rusty :) "
 homepage = "https://github.com/dotzenith/SpotiFetch.rs"
@@ -20,11 +20,10 @@ image = "0.23.12"
 rand = "0.8.5"
 
 [profile.release]
-lto = true
+lto = "thin"
 panic = "abort"
 strip = true
 
 # The profile that 'cargo dist' will build with
 [profile.dist]
 inherits = "release"
-lto = "thin"
