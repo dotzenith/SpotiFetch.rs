@@ -58,13 +58,13 @@ pub fn custom_output(img_url: String, lines: Vec<String>, profile: bool) {
         .collect();
 
     let middle = (
-        "_..**.._".kolorize(&image_colors[1]).expect("invalid hex color"),
-        "_..**.._".kolorize(&image_colors[2]).expect("invalid hex color"),
-        "_..**.._".kolorize(&image_colors[3]).expect("invalid hex color"),
+        "_..**.._".kolorize(&image_colors[1]),
+        "_..**.._".kolorize(&image_colors[2]),
+        "_..**.._".kolorize(&image_colors[3]),
     );
     let logo_fields = LogoFields {
-        border: ";;".kolorize(&image_colors[0]).expect("invalid hex color"),
-        bar: "______".kolorize(&image_colors[0]).expect("invalid hex color"),
+        border: ";;".kolorize(&image_colors[0]),
+        bar: "______".kolorize(&image_colors[0]),
         middle,
     };
 
@@ -72,38 +72,38 @@ pub fn custom_output(img_url: String, lines: Vec<String>, profile: bool) {
         let output_lines: [String; 5] = [
             format!(
                 "{}            {}",
-                "USER".kolorize(&image_colors[1]).expect("invalid hex color"),
+                "USER".kolorize(&image_colors[1]),
                 lines[0]
             ),
             format!(
                 "{}     {}",
-                "NOW PLAYING".kolorize(&image_colors[2]).expect("invalid hex color"),
+                "NOW PLAYING".kolorize(&image_colors[2]),
                 lines[1]
             ),
             format!(
                 "{}    {}",
-                "RECENT TRACK".kolorize(&image_colors[3]).expect("invalid hex color"),
+                "RECENT TRACK".kolorize(&image_colors[3]),
                 lines[2]
             ),
             format!(
                 "{}       {}",
-                "TOP TRACK".kolorize(&image_colors[4]).expect("invalid hex color"),
+                "TOP TRACK".kolorize(&image_colors[4]),
                 lines[3]
             ),
             format!(
                 "{}      {}",
-                "TOP ARTIST".kolorize(&image_colors[5]).expect("invalid hex color"),
+                "TOP ARTIST".kolorize(&image_colors[5]),
                 lines[4]
             ),
         ];
         print_art(logo_fields, output_lines);
     } else {
         let output_lines: [String; 5] = [
-            format!("{}", &lines[0].kolorize(&image_colors[1]).expect("invalid hex color")),
-            format!("{}", &lines[1].kolorize(&image_colors[2]).expect("invalid hex color")),
-            format!("{}", &lines[2].kolorize(&image_colors[3]).expect("invalid hex color")),
-            format!("{}", &lines[3].kolorize(&image_colors[4]).expect("invalid hex color")),
-            format!("{}", &lines[4].kolorize(&image_colors[5]).expect("invalid hex color")),
+            format!("{}", &lines[0].kolorize(&image_colors[1])),
+            format!("{}", &lines[1].kolorize(&image_colors[2])),
+            format!("{}", &lines[2].kolorize(&image_colors[3])),
+            format!("{}", &lines[3].kolorize(&image_colors[4])),
+            format!("{}", &lines[4].kolorize(&image_colors[5])),
         ];
         print_art(logo_fields, output_lines);
     }
