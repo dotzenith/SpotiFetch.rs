@@ -135,7 +135,7 @@ SpotiFetch.rs is the direct result of browsing too many unix subreddits and gene
 
 ### ❖ What's New? 
 
-1.0.1 - Update `kolorz`
+1.0.2 - Update `kolorz`
 
 ---
 
