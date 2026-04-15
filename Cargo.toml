@@ -1,6 +1,6 @@
 [package]
 name = "spotifetch"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2024"
 description = "A simple and beautiful fetch tool for spotify, now rusty :) "
 homepage = "https://github.com/dotzenith/SpotiFetch.rs"
@@ -17,7 +17,7 @@ clap = { version = "4.4.9", features = ["cargo"] }
 platform-dirs = "0.3.0"
 anyhow = "1.0.75"
 image = "0.23.12"
-rand = "0.8.5"
+rand = "0.10.1"
 
 [profile.release]
 lto = "thin"
